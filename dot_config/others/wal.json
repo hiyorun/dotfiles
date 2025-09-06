@@ -1,0 +1,26 @@
+{
+  "alpha": "100",
+  "special": {
+    "background": "{{ .iroha.surface.hex }}",
+    "foreground": "{{ .iroha.onSurface.hex }}",
+    "cursor": "{{ .iroha.onSurface.hex }}"
+  },
+  "colors": {
+    "color0": "{{ .iroha.surface.hex }}",
+    "color1": "{{ .iroha.onSurface.hex }}",
+    "color2": "{{ .iroha.primary.hex }}",
+    "color3": "{{ .iroha.onPrimary.hex }}",
+    "color4": "{{ .iroha.secondary.hex }}",
+    "color5": "{{ .iroha.onSecondary.hex }}",
+    "color6": "{{ .iroha.tertiary.hex }}",
+    "color7": "{{ .iroha.onTertiary.hex }}",
+    "color8": "{{ .iroha.surfaceVariant.hex }}",
+    "color9": "{{ .iroha.onSurfaceVariant.hex }}",
+    "color10": "{{ .iroha.primaryContainer.hex }}",
+    "color11": "{{ .iroha.secondaryContainer.hex }}",
+    "color12": "{{ .iroha.tertiaryContainer.hex }}",
+    "color13": "{{ .iroha.outline.hex }}",
+    "color14": "{{ .iroha.outlineVariant.hex }}",
+    "color15": "{{ .iroha.inverseSurface.hex }}"
+  }
+}
