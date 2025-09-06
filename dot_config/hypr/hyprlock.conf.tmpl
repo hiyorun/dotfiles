@@ -30,9 +30,21 @@ label {
     text = $TIME
     color = {{ .iroha.onSurface.rgb }}
     font_size = 50
+    font_family = SpaceMono Nerd Font Bold
+
+    position = 20, 20
+    halign = left
+    valign = bottom
+}
+
+label {
+    monitor =
+    text = cmd[update:1000] date +"%Y年%m月%d日(%a)"
+    color = {{ .iroha.onSurface.rgb }}
+    font_size = 12
     font_family = SpaceMono Nerd Font
 
-    position = 20, 0
+    position = 25, 20
     halign = left
     valign = bottom
 }
@@ -44,7 +56,7 @@ label {
     font_size = 12
     font_family = SpaceMono Nerd Font
 
-    position = 25, 80
+    position = 25, 100
     halign = left
     valign = bottom
 }
