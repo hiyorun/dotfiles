@@ -1,0 +1,64 @@
+@use '../../colours.scss' as coloursys;
+
+.osd-window {
+  background-color: transparent;
+}
+
+.osd {
+  background-color: transparent;
+  margin: 1rem;
+}
+
+.volume-osd-container {
+}
+
+.volume-osd {
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  background-color: coloursys.$bg;
+  color: coloursys.$fg;
+}
+
+.volume-slider {
+  padding: 0;
+  margin: 0.05rem 0rem 0.05rem 1rem;
+  min-width: 20rem;
+
+  trough {
+    background-color: rgba(128, 128, 128, 0.2);
+    border-radius: 1rem;
+  }
+
+  highlight {
+    background-color: coloursys.$selected_bg;
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+
+  slider {
+    min-height: 1rem;
+    min-width: 1rem;
+    box-shadow: 0 0 0 0;
+    border: 0px;
+    border-radius: 0;
+    background-color: transparent;
+  }
+}
+
+.volume-slider.mute {
+  highlight {
+    background-color: coloursys.$error;
+  }
+}
+
+.brightness-osd-container {
+  // Matches volume-osd-container, can be extended later
+}
+
+.brightness-osd {
+  @extend .volume-osd; // Reuse padding, bg, radius, colors
+}
+
+.brightness-slider {
+  @extend .volume-slider;
+}

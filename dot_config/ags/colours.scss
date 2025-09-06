@@ -1,0 +1,41 @@
+$fg: #{'@theme_fg_color'}; // #ffffff
+$text: #{'@theme_text_color'}; // #dddddd
+$bg: #{'@theme_bg_color'}; // #1e1e1e
+$base: #{'@theme_base_color'}; // #2a2a2a
+$selected_bg: #{'@theme_selected_bg_color'}; // #3399ff
+$selected_fg: #{'@theme_selected_fg_color'}; // #ffffff
+$insensitive_bg: #{'@insensitive_bg_color'}; // #3a3a3a
+$insensitive_fg: #{'@insensitive_fg_color'}; // #7f7f7f
+$insensitive_base: #{'@base_color'}; // #2a2a2a
+$unfocused_fg: #{'@theme_unfocused_fg_color'}; // #bbbbbb
+$unfocused_text: #{'@theme_unfocused_text_color'}; // #999999
+$unfocused_bg: #{'@theme_unfocused_bg_color'}; // #2e2e2e
+$unfocused_base: #{'@theme_unfocused_base_color'}; // #333333
+$unfocused_selected_bg: #{'@theme_unfocused_selected_bg_color'}; // #295d8f
+$unfocused_selected_fg: #{'@theme_unfocused_selected_fg_color'}; // #e0e0e0
+$unfocused_insensitive: #{'@unfocused_insensitive_color'}; // #555555
+$borders: #{'@borders'}; // #444444
+$unfocused_borders: #{'@unfocused_borders'}; // #3d3d3d
+$warning: #{'@warning_color'}; // #f0c674
+$error: #{'@error_color'}; // #cc6666
+$success: #{'@success_color'}; // #b5bd68
+// $destructive: #{"@destructive_color"}; // Uncomment if needed
+
+// WM colors
+$wm_title: #{'@wm_title'}; // #ffffff
+$wm_unfocused_title: #{'@wm_unfocused_title'}; // #bbbbbb
+$wm_highlight: #{'@wm_highlight'}; // transparent
+$wm_borders_edge: #{'@wm_borders_edge'}; // #292929
+$wm_bg_a: #{'@wm_bg_a'}; // #282828
+$wm_bg_b: #{'@wm_bg_b'}; // #1e1e1e
+$wm_shadow: #{'@wm_shadow'}; // rgba(0,0,0,0.35)
+$wm_border: #{'@wm_border'}; // rgba(0,0,0,0.18)
+$wm_button_hover_color_a: #{'@wm_button_hover_color_a'}; // #3d3d3d
+$wm_button_hover_color_b: #{'@wm_button_hover_color_b'}; // #1e1e1e
+$wm_button_active_color_a: #{'@wm_button_active_color_a'}; // #191919
+$wm_button_active_color_b: #{'@wm_button_active_color_b'}; // #202020
+$wm_button_active_color_c: #{'@wm_button_active_color_c'}; // #222222
+
+// API / Special use
+$content_view_bg: #{'@content_view_bg'}; // #2a2a2a
+$text_view_bg: #{'@text_view_bg'}; // #242424

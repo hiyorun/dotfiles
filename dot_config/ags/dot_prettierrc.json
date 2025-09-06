@@ -1,0 +1,14 @@
+{
+  "bracketSameLine": false,
+  "bracketSpacing": true,
+  "experimentalOperatorPosition": "start",
+  "objectWrap": "preserve",
+  "printWidth": 100,
+  "quoteProps": "consistent",
+  "semi": true,
+  "singleAttributePerLine": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "useTabs": false
+}

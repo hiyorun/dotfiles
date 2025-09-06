@@ -1,0 +1,11 @@
+{
+  "name": "astal-shell",
+  "dependencies": {
+    "astal": "/usr/share/astal/gjs"
+  },
+  "scripts": {
+    "dev": "ags run",
+    "qs": "ags toggle 'quick_settings'",
+    "format": "prettier --write ."
+  }
+}
