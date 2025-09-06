@@ -1,0 +1,140 @@
+@define-color theme_selected_bg_color @accent_color;
+
+/* Window background */
+.thunar,
+.thunar .content-view,
+.thunar .sidebar,
+.thunar .view,
+.thunar .pathbar {
+    background-color: @sidebar_bg_color;
+    border-radius: 10px;
+    color: @window_fg_color;
+}
+
+.thunar .view,
+.thunar treeview,
+.thunar iconview {
+    border: none;
+    padding: 6px 2px;
+}
+
+.thunar grid > paned > separator {
+    background-color: transparent;
+    box-shadow: none;
+    border: 1px solid @sidebar_bg_color;
+}
+
+.thunar toolbar {
+    background-color: @sidebar_bg_color;
+    padding: 5px 5px 0 5px;
+}
+
+/* Standard file view */
+.thunar .standard-view {
+    border: 0px none;
+    background-color: @window_bg_color;
+    border-radius: 15px 0px 0px 0px;
+    color: @card_fg_color;
+}
+
+.thunar .standard-view > .view {
+    background-color: @window_bg_color;
+    border-radius: 15px 0px 0px 0px;
+}
+
+.thunar paned > grid {
+    border-radius: 15px 0px 0px 0px;
+    margin: 10px 0 0 10px;
+    box-shadow: 0 0px 4px 2px @card_shade_color;
+}
+
+.thunar grid > widget {
+    background-color: @window_bg_color;
+}
+
+/* Pathbar & header */
+.thunar .pathbar,
+.thunar .header-bar {
+    background-color: @headerbar_bg_color;
+    color: @headerbar_fg_color;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 2px 4px @headerbar_shade_color;
+}
+
+/* Sidebar */
+.thunar .sidebar {
+    background-color: @sidebar_bg_color;
+    color: @sidebar_fg_color;
+    margin: 8px 0 0 8px;
+    border: 0px;
+}
+
+.thunar .sidebar .view:selected {
+    background-color: @window_bg_color;
+    color: @window_fg_color;
+}
+
+/* Icons and text highlight */
+.thunar .standard-view > .view .view {
+    background-color: @window_bg_color;
+    color: @window_fg_color;
+}
+
+/* Hover effect */
+.thunar .view:hover {
+    background-color: rgba(98, 97, 24, 0.1); /* soft hover for accent color */
+}
+
+/* Make buttons round */
+.thunar toolbar > toolbutton > button {
+    border-radius: 15px;
+    padding: 5px 6px;
+    margin: 2px;
+    background-color: @sidebar_bg_color;
+    color: @sidebar_fg_color;
+}
+
+.thunar toolbar > toolbutton > button:hover {
+    background-color: @accent_color;
+    color: @accent_bg_color;
+}
+
+.thunar toolbar .radio:checked {
+    background-color: @accent_color;
+    color: @accent_bg_color;
+}
+
+/* Tooltips */
+.thunar tooltip {
+    background-color: @shade_color;
+    color: white;
+    border-radius: 4px;
+}
+
+/* Path entry */
+.thunar toolitem > widget > box > entry {
+    background-color: @window_bg_color;
+    color: @window_fg_color;
+    margin: 3px 0px;
+}
+
+/* Column headers */
+.thunar scrolledwindow > treeview > header * {
+    padding: 3px;
+    background-color: transparent;
+    color: @window_fg_color;
+}
+
+.thunar .reorderable-page {
+    margin: 2px;
+}
+
+.thunar .reorderable-page:checked{
+    background-color: @card_bg_color;
+}
+
+.thunar paned.horizontal>notebook header {
+    background-color: @window_bg_color;
+    border-radius: 15px 0 0 0;
+
+}
