@@ -1,0 +1,7 @@
+{
+  ".config/tmux/plugins/tpm": {
+    "type": "git-repo",
+    "url": "git@github.com:tmux-plugins/tpm",
+    "refreshPeriod": "1h"
+  }
+}
