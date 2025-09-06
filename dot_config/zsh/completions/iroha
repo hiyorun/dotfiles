@@ -1,0 +1,7 @@
+#compdef iroha
+
+_iroha_completion() {
+  eval $(env _TYPER_COMPLETE_ARGS="${words[1,$CURRENT]}" _IROHA_COMPLETE=complete_zsh iroha)
+}
+
+compdef _iroha_completion iroha

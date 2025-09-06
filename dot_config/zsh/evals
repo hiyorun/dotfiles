@@ -1,0 +1,4 @@
+eval $(ssh-agent) 1> /dev/null
+ssh-add -q ~/.ssh/id_ed25519
+
+eval $(thefuck --alias)

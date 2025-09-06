@@ -1,0 +1,77 @@
+# Defer
+source /opt/zsh-defer/zsh-defer.plugin.zsh
+autoload -Uz add-zsh-hook
+autoload -Uz zsh-defer
+
+# Secrets
+source $XDG_CONFIG_HOME/zsh/secrets
+
+# MOTD
+source $XDG_CONFIG_HOME/zsh/motd
+
+# Lines configured by zsh-newuser-install
+HISTFILE=$XDG_CONFIG_HOME/zsh/history
+HISTSIZE=1000
+SAVEHIST=1000
+ZLE_RPROMPT_INDENT=0
+setopt autocd beep nomatch notify
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+bindkey -e
+# End of lines configured by zsh-newuser-install
+
+# AutoTitle
+function xterm_title_precmd () {
+	print -Pn -- '\e]2;%n@%m:%~\a'
+	[[ "$TERM" == 'screen'* ]] && print -Pn -- '\e_\005{g}%n\005{-}@\005{m}%m\005{-} \005{B}%~\005{-}\e\\'
+}
+
+function xterm_title_preexec () {
+	print -Pn -- '\e]2;%n@%m:%~$ ' && print -n -- "${(q)1}\a"
+	[[ "$TERM" == 'screen'* ]] && { print -Pn -- '\e_\005{g}%n\005{-}@\005{m}%m\005{-} \005{B}%~\005{-} %# ' && print -n -- "${(q)1}\e\\"; }
+}
+
+if [[ "$TERM" == (Eterm*|alacritty*|aterm*|foot*|gnome*|konsole*|kterm*|putty*|rxvt*|screen*|wezterm*|tmux*|xterm*) ]]; then
+	add-zsh-hook -Uz precmd xterm_title_precmd
+	add-zsh-hook -Uz preexec xterm_title_preexec
+fi
+
+# Exports
+source $XDG_CONFIG_HOME/zsh/exports
+
+# Aliases
+source $XDG_CONFIG_HOME/zsh/aliases
+
+# Keybindings
+source $XDG_CONFIG_HOME/zsh/keybinds
+
+# Syntax Highlighting
+zsh-defer source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Autosuggestions
+zsh-defer source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Evals
+source $XDG_CONFIG_HOME/zsh/evals
+
+# Paranoid mode
+source $XDG_CONFIG_HOME/zsh/paranoid
+
+# Custom sources
+source $XDG_CONFIG_HOME/zsh/sources/all
+
+# Completions
+zsh-defer source $XDG_CONFIG_HOME/zsh/completions/all
+
+eval "$(starship init zsh)"
+TRANSIENT_PROMPT="${PROMPT// prompt / prompt --profile transient }"
+TRANSIENT_RPROMPT="${PROMPT// prompt / prompt --profile rtransient }"
+
+autoload -Uz add-zle-hook-widget
+add-zle-hook-widget zle-line-finish transient-prompt
+
+function transient-prompt() {
+    PROMPT="$TRANSIENT_PROMPT" RPROMPT="$TRANSIENT_RPROMPT" zle .reset-prompt
+}

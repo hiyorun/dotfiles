@@ -1,0 +1,3 @@
+alias cp='cp -ip'
+alias mv='mv -i'
+alias rm='echo "Yes, you. Still not traumatized by losing 1TB of your data? Using trash-cli instead."; trash -v'

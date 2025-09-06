@@ -1,0 +1,10 @@
+# The following lines were added by compinstall
+zstyle :compinstall filename "$XDG_CONFIG_HOME/zsh/.zshrc"
+
+autoload -Uz compinit
+compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compdump"
+# End of lines added by compinstall
+
+source $XDG_CONFIG_HOME/zsh/completions/iroha
+source $XDG_CONFIG_HOME/zsh/completions/k9s
+source $XDG_CONFIG_HOME/zsh/completions/redocly

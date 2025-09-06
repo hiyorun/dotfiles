@@ -1,0 +1,13 @@
+alias svn="svn --config-dir \"$XDG_CONFIG_HOME\"/subversion"
+# alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
+alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
+
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias cat=bat
+
+alias diff="diff -y --color='always'"
+
+alias upscayl-bin='upscayl-bin -m $XDG_CONFIG_HOME/upscayl/models'

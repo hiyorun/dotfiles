@@ -1,0 +1,35 @@
+# create a zkbd compatible hash;
+# to add other keys to this hash, see: man 5 terminfo
+typeset -g -A key
+
+key[Home]="${terminfo[khome]}"
+key[End]="${terminfo[kend]}"
+
+# setup key accordingly
+[[ -n "${key[Home]}"      ]] && bindkey -- "${key[Home]}"	beginning-of-line
+[[ -n "${key[End]}"       ]] && bindkey -- "${key[End]}"        end-of-line
+
+# Finally, make sure the terminal is in application mode, when zle is
+# active. Only then are the values from $terminfo valid.
+if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
+        autoload -Uz add-zle-hook-widget
+        function zle_application_mode_start { echoti smkx }
+        function zle_application_mode_stop { echoti rmkx }
+        add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
+        add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
+fi
+
+# Fix keybinding
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[[3~"  delete-char
+bindkey "^[[3;5~" kill-word
+bindkey '^H' backward-kill-word
+bindkey '^[[2~' overwrite-mode
+bindkey '^[[5~' beginning-of-buffer-or-history
+bindkey '^[[6~' end-of-buffer-or-history
+bindkey '^[[Z' reverse-menu-complete
+
+# Delete char on slash /
+autoload -U select-word-style
+select-word-style bash
