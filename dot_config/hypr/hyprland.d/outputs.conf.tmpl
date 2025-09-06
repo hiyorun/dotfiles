@@ -1,0 +1,24 @@
+# Hyprland monitor configuration
+# Generated from system monitor detection
+
+{{- $monitors := .monitors }}
+{{- $xOffset := 0 }}
+
+{{- range $index, $monitor := $monitors }}
+{{- $highestModeIndex := sub (len $monitor.availableModes) 1 }}
+{{- $highestMode := index $monitor.availableModes $highestModeIndex }}
+{{- $parts := split "@" $highestMode }}
+{{- $resolution := index $parts "_0" }}
+{{- $refreshRateFull := index $parts "_1" }}
+{{- $refreshRate := trimSuffix "Hz" $refreshRateFull }}
+{{- $resParts := split "x" $resolution }}
+{{- $widthStr := index $resParts "_0" }}
+{{- $heightStr := index $resParts "_1" }}
+{{- $width := atoi $widthStr }}
+
+# Monitor {{ $index }}: {{ $monitor.name }}
+monitor={{ $monitor.name }},{{ $resolution }}@{{ $refreshRate }},{{ $xOffset }}x0,1
+monitor={{ $monitor.name }},transform,0
+
+{{- $xOffset = add $xOffset $width }}
+{{- end }}

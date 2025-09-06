@@ -1,0 +1,10 @@
+{{- $workspaceStart := 1 -}}
+{{- range $mIndex, $monitor := .monitors }}
+
+# Workspace for monitor {{ $monitor.name }}:
+  {{- range $i := until 10 }}
+workspace={{ add $workspaceStart $i }},monitor:{{ $monitor.name }}
+  {{- end }}
+  {{- $workspaceStart = add $workspaceStart 10 -}}
+{{- end }}
+

@@ -1,7 +1,9 @@
+{{- range .monitors }}
 background {
-    monitor = DP-1
+    monitor = {{ .name }}
     path = $XDG_CONFIG_HOME/hypr/assets/wallpaper_landscape.png
 }
+{{- end }}
 
 input-field {
     monitor =
@@ -10,12 +12,12 @@ input-field {
     dots_size = 0.3 # Scale of input-field height, 0.2 - 0.8
     dots_spacing = 0.3 # Scale of dots' absolute size, 0.0 - 1.0
     dots_center = true
-    outer_color = rgb(29,27,30)
-    inner_color = rgb(254,248,252)
-    font_color = rgb(29,27,30)
+    outer_color = {{ .iroha.onSurface.rgb }}
+    inner_color = {{ .iroha.surface.rgb }}
+    font_color = {{ .iroha.onSurface.rgb }}
 
     fade_on_empty = true
-    placeholder_text = <span font_size="9pt" font_family="SpaceMono Nerd Font" foreground="##1D1B1E">Password</span>
+    placeholder_text = <span font_size="9pt" font_family="SpaceMono Nerd Font" foreground="#{{ .iroha.onSurface.hex }}">Password</span>
     hide_input = false
 
     position = 0, 0
@@ -26,7 +28,7 @@ input-field {
 label {
     monitor =
     text = $TIME
-    color = rgb(29,27,30)
+    color = {{ .iroha.onSurface.rgb }}
     font_size = 50
     font_family = SpaceMono Nerd Font
 
@@ -37,8 +39,8 @@ label {
 
 label {
     monitor =
-    text = cmd[update:1000] playerctl metadata --format \{\{artist}}\ -\ \{\{title}} 
-    color = rgb(29,27,30)
+    text = cmd[update:1000] playerctl metadata --format \{\{artist}}\ -\ \{\{title}}
+    color = {{ .iroha.onSurface.rgb }}
     font_size = 12
     font_family = SpaceMono Nerd Font
 
@@ -46,3 +48,4 @@ label {
     halign = left
     valign = bottom
 }
+
