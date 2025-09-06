@@ -1,0 +1,7 @@
+vim.opt.background = "{{ ternary "dark" "light" .darkMode }}"
+
+vim.g.colors_name = "iroha"
+
+package.loaded["lush_theme.iroha"] = nil
+
+require("lush")(require("lush_theme.iroha"))

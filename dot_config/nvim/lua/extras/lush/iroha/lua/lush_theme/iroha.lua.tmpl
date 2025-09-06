@@ -1,0 +1,26 @@
+local lush = require("lush")
+local hsl = lush.hsl
+
+local surface = {{ .iroha.surface.hsl_no_decor }}
+local surface_variant = {{ .iroha.primaryContainer.hsl_no_decor }}
+local on_surface = {{ .iroha.onSurface.hsl_no_decor }}
+local primary = {{ .iroha.primary.hsl_no_decor }}
+local on_primary = {{ .iroha.onPrimary.hsl_no_decor }}
+
+local theme = lush(function(injected_functions)
+  local sym = injected_functions.sym
+  return {
+    CursorLine({ bg = surface_variant, fg = on_surface }),
+    LineNr({ fg = primary }),
+    Normal({ fg = on_surface }),
+    NormalNC({ fg = on_surface }),
+    Search({ bg = primary, fg = on_primary }),
+    StatusLine({ bg = surface_variant, fg = on_surface }),
+    Visual({ bg = surface_variant, fg = on_surface }),
+    Winseparator({ bg = primary, fg = primary }),
+    NeoTreeNormal({ bg = surface, fg = on_surface }),
+    NeoTreeNormalNC({ bg = surface, fg = on_surface }),
+  }
+end)
+
+return theme
