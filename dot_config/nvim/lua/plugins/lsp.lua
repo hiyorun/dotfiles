@@ -18,6 +18,15 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
+      servers = {
+        qmlls = {
+          cmd = { "qmlls6" },
+          filetypes = { "qml" },
+          root_dir = function(fname)
+            return require("lspconfig.util").root_pattern(".git")(fname) or vim.fn.getcwd()
+          end,
+        },
+      },
       setup = {
         volar = function(_, opts)
           opts.on_attach = function(client, _)
