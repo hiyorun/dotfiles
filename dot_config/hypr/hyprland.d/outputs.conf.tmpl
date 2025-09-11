@@ -15,9 +15,15 @@
 {{- $heightStr := index $resParts "_1" }}
 {{- $width := atoi $widthStr }}
 
+{{- $scaleStr := printf "%.2f" $monitor.scale }}
+{{- $scaleStrNoDot := $scaleStr | replace "." "" }}
+{{- $scalePadded := printf "%-04s" $scaleStrNoDot | replace " " "0" }}
+{{- $scaleInt := atoi $scalePadded }}
+{{- $nextWidth := div (mul $width 1000) $scaleInt }}
+
 # Monitor {{ $index }}: {{ $monitor.name }}
-monitor={{ $monitor.name }},{{ $resolution }}@{{ $refreshRate }},{{ $xOffset }}x0,1
+monitor={{ $monitor.name }},{{ $resolution }}@{{ $refreshRate }},{{ $xOffset }}x0,{{ $monitor.scale }}
 monitor={{ $monitor.name }},transform,0
 
-{{- $xOffset = add $xOffset $width }}
+{{- $xOffset = $nextWidth }}
 {{- end }}
