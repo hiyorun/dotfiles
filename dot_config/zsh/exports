@@ -1,8 +1,15 @@
 export EDITOR=nvim
 export MAKEFLAGS='-j3'
 export BAT_THEME="OneHalfLight"
-export PATH="$HOME/.local/bin:/usr/lib/upscayl/resources/bin:$HOME/.local/bin/sonar-scanner-6.2.1.4610-linux-x64/bin:$PATH"
-export GOPATH="/opt/go"; export GOROOT="/usr/share/go"; export PATH="$GOPATH/bin:$PATH"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
+
+# Go
+# g-install: do NOT edit, see https://github.com/stefanmaric/g
+export GOROOT="$XDG_DATA_HOME/go"
+export GOPATH="$XDG_DATA_HOME/go-sdk"
+export GOCACHE="$XDG_CACHE_HOME/go-build"
+export GOMODCACHE="$GOPATH/pkg/mod"
+export GOTMPDIR="$XDG_CACHE_HOME/go-tmp"
+export PATH="$GOPATH/bin:$PATH"; 
 
 export GPG_TTY=$(tty)
 
