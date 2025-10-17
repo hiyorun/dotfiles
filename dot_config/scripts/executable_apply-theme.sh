@@ -127,7 +127,7 @@ main() {
   disown
 
   echo "Applying GTK settings..."
-  bash "$XDG_CONFIG_HOME/hypr/scripts/gtkapply.sh"
+  bash "$XDG_CONFIG_HOME/scripts/gtkapply.sh"
 
   echo "Updating pywalfox..."
   pywalfox update
