@@ -23,6 +23,7 @@ return {
         lua = { "stylua" },
         python = { "isort", "black" },
         javascript = { "prettierd", "prettier", stop_after_first = true },
+        html = { "prettierd", "prettier", stop_after_first = true },
         vue = { "prettier" },
         qml = { "qmlformat" },
       },
