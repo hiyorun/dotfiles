@@ -1,6 +1,6 @@
 import { Variable } from 'astal';
 
-const datetime = Variable('').poll(1000, 'date');
+const datetime = Variable('').poll(1000, 'date -Iseconds');
 
 function getTimezoneOffsetStr(date: Date): string {
   const offset = date.getTimezoneOffset();
@@ -71,10 +71,7 @@ function createFormattedDate(timeString: string) {
 
   return {
     raw: time,
-    format: (formatString: string) => {
-      return formatDate(time, formatString);
-    },
-    // Backward compat:
+    format: (formatString: string) => formatDate(time, formatString),
     get pretty() {
       const weekday = time.toLocaleString('default', { weekday: 'short' });
       const date = time.getDate();
@@ -92,4 +89,7 @@ function createFormattedDate(timeString: string) {
 }
 
 export const DateTime = (callback: (formatted: ReturnType<typeof createFormattedDate>) => void) =>
-  datetime.subscribe((val) => callback(createFormattedDate(val)));
+  datetime.subscribe((val) => {
+    if (!val) return;
+    callback(createFormattedDate(val.trim()));
+  });
