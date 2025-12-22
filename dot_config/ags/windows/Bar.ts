@@ -1,7 +1,4 @@
 import { App, Astal, Gtk, Gdk, Widget } from 'astal/gtk3';
-import Media from '../widgets/media/Media';
-import Time from '../widgets/time/Time';
-import Tray from '../widgets/tray/Tray';
 import LowerSection from './bar_sections/Lower';
 import MiddleSection from './bar_sections/Middle';
 import UpperSection from './bar_sections/Upper';

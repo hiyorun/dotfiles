@@ -51,18 +51,6 @@ main() {
   local iroha_args=()
   local json_args=()
 
-  if "$dark_mode"; then
-    echo "Applying dark theme."
-    iroha_args+=(-d)
-    json_args+=(-d)
-    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-    pywalfox dark
-  else
-    echo "Applying light theme."
-    gsettings set org.gnome.desktop.interface color-scheme 'default'
-    pywalfox light
-  fi
-
   if [[ "$source_type" == 'image' ]]; then
     if [[ -z "$source_value" ]]; then
       local hyprpaper_conf="$XDG_CONFIG_HOME/hypr/hyprpaper.conf"
@@ -82,6 +70,18 @@ main() {
     fi
     echo "Using color as source: $source_value"
     json_args+=("from-color" "$source_value")
+  fi
+
+  if "$dark_mode"; then
+    echo "Applying dark theme."
+    iroha_args+=(-d)
+    json_args+=(-d)
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    pywalfox dark
+  else
+    echo "Applying light theme."
+    gsettings set org.gnome.desktop.interface color-scheme 'default'
+    pywalfox light
   fi
 
   echo "Generating and applying theme..."

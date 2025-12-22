@@ -1,12 +1,1 @@
 @use './colours.scss' as coloursys;
-
-.time-container {
-  background-color: coloursys.$selected_bg;
-  color: coloursys.$bg;
-  padding: 1rem 0rem;
-  border-radius: 1.5rem;
-}
-
-.time-label {
-  padding-left: 0.7rem;
-}

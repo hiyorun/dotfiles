@@ -57,7 +57,7 @@ export function NotificationPopups(gdkmonitor: Gdk.Monitor): Window {
     notifications.forEach((notification, index) => {
       const widget = Notification({
         notification,
-        onDismiss: (id) => service.dismissNotification(id),
+        onDismiss: (id: number) => service.dismissNotification(id),
         onInvoke: (id, actionId) => service.invokeAction(id, actionId),
         onHover: () => {
           const state = timeoutState.get(notification.id);

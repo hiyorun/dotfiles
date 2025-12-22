@@ -1,19 +1,23 @@
 @use './colours.scss' as coloursys;
 
 .tray-container {
-  background-color: coloursys.$selected_bg;
-  color: coloursys.$selected_fg;
+  background-color: coloursys.$wm_bg_a;
+  color: coloursys.$fg;
   padding: 0.5rem;
   border-radius: 1.5rem;
+  box-shadow: 0px 0px 2px 2px #1a1a1a44;
 }
 
 .tray-item {
   margin: 0;
-  padding: 0;
+  padding: 0 0.2rem;
   background-color: transparent;
 }
 
 .battery-icon {
-  color: coloursys.$bg;
-  padding: 0.3rem 0rem;
+  padding: 0.5rem 0rem;
+}
+
+.time-tray {
+  margin: 0.8rem 0rem;
 }

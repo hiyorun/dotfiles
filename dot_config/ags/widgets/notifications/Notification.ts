@@ -1,16 +1,21 @@
-import { execAsync, GLib } from 'astal';
+import { GLib } from 'astal';
 import { Gtk, Astal } from 'astal/gtk3';
 import { Box, EventBox, Icon, Label, Button } from 'astal/gtk3/widget';
 import Notifd from 'gi://AstalNotifd';
+import { Ellipsis } from '@/utils/ellipsis';
 
-const isIcon = (icon: string) => !!Astal.Icon.lookup_icon(icon);
+export type NotificationProps = {
+  notification: Notifd.Notification;
+  onDismiss: (id: number) => void;
+  onInvoke: (id: number, actionId: string) => void;
+  onHover: () => void;
+  onHoverLost: () => void;
+};
 
-const fileExists = (path: string) => GLib.file_test(path, GLib.FileTest.EXISTS);
+const formatTime = (unix: number, format = '%H:%M') =>
+  GLib.DateTime.new_from_unix_local(unix).format(format)!;
 
-const time = (time: number, format = '%H:%M') =>
-  GLib.DateTime.new_from_unix_local(time).format(format)!;
-
-const urgency = (n: Notifd.Notification) => {
+const urgencyClass = (n: Notifd.Notification) => {
   const { LOW, NORMAL, CRITICAL } = Notifd.Urgency;
   switch (n.urgency) {
     case LOW:
@@ -23,60 +28,80 @@ const urgency = (n: Notifd.Notification) => {
   }
 };
 
-type NotificationProps = {
-  notification: Notifd.Notification;
-  onDismiss?: (id: number) => void;
-  onInvoke?: (id: number, actionId: string) => void;
-  onHover?: () => void;
-  onHoverLost?: () => void;
-};
+function NotifImage(n: Notifd.Notification): Box | null {
+  if (!n.image) return null;
 
-export function Notification({
-  notification: n,
-  onDismiss,
-  onInvoke,
-  onHover,
-  onHoverLost,
-}: NotificationProps): EventBox {
-  const { START, CENTER, END } = Gtk.Align;
+  if (GLib.file_test(n.image, GLib.FileTest.EXISTS)) {
+    const box = new Box({ valign: Gtk.Align.START });
+    box.className = 'image';
+    box.css = `background-image: url('${n.image}')`;
+    return box;
+  }
 
-  const eventBox = new EventBox();
-  eventBox.className = `Notification ${urgency(n)}`;
+  if (Astal.Icon.lookup_icon(n.image)) {
+    const box = new Box({ valign: Gtk.Align.START });
+    box.className = 'icon-image';
+    box.add(
+      new Icon({
+        icon: n.image,
+        halign: Gtk.Align.CENTER,
+        valign: Gtk.Align.CENTER,
+      }),
+    );
+    return box;
+  }
 
-  if (onHover) eventBox.connect('enter-notify-event', onHover);
-  if (onHoverLost) eventBox.connect('leave-notify-event', onHoverLost);
+  return null;
+}
 
-  const mainBox = new Box({ vertical: true });
-
-  // Header
-  const headerBox = new Box();
-  headerBox.className = 'header';
+function NotifHeader(n: Notifd.Notification, onDismiss?: (id: number) => void): Box {
+  const row = new Box();
+  row.className = 'header-text';
 
   if (n.appIcon || n.desktopEntry) {
     const appIcon = new Icon({
       icon: n.appIcon || n.desktopEntry,
     });
     appIcon.className = 'app-icon';
-    headerBox.add(appIcon);
+    row.add(appIcon);
+    row.add(
+      new Label({
+        label: '·',
+        halign: Gtk.Align.START,
+        className: 'interpunct',
+      }),
+    );
   }
 
-  const appNameLabel = new Label({
-    label: n.appName || 'Unknown',
-    halign: START,
-    truncate: true,
-  });
-  appNameLabel.className = 'app-name';
-  headerBox.add(appNameLabel);
+  row.add(
+    new Label({
+      label: n.appName || 'Unknown',
+      truncate: true,
+      halign: Gtk.Align.START,
+      className: 'app-name',
+    }),
+  );
 
-  const timeLabel = new Label({
-    label: time(n.time),
-    hexpand: true,
-    halign: END,
-  });
-  timeLabel.className = 'time';
-  headerBox.add(timeLabel);
+  row.add(
+    new Label({
+      label: '·',
+      halign: Gtk.Align.START,
+      className: 'interpunct',
+    }),
+  );
 
-  const closeButton = new Button();
+  row.add(
+    new Label({
+      label: formatTime(n.time),
+      hexpand: true,
+      halign: Gtk.Align.START,
+      className: 'time',
+    }),
+  );
+
+  const closeButton = new Button({
+    halign: Gtk.Align.END,
+  });
   closeButton.add(new Icon({ icon: 'window-close-symbolic' }));
   closeButton.connect('clicked', () => {
     if (onDismiss) {
@@ -85,92 +110,108 @@ export function Notification({
       n.dismiss();
     }
   });
-  headerBox.add(closeButton);
 
-  mainBox.add(headerBox);
+  row.add(closeButton);
+  return row;
+}
 
-  // Content
-  const contentBox = new Box();
-  contentBox.className = 'content';
+function NotifText(n: Notifd.Notification): Box {
+  const text = new Box({ vertical: true });
+  text.className = 'text';
 
-  // Image handling
-  if (n.image && fileExists(n.image)) {
-    const imageBox = new Box({
-      valign: START,
-    });
-    imageBox.className = 'image';
-    imageBox.css = `background-image: url('${n.image}')`;
-    contentBox.add(imageBox);
-  } else if (n.image && isIcon(n.image)) {
-    const iconImageBox = new Box({
-      expand: false,
-      valign: START,
-    });
-    iconImageBox.className = 'icon-image';
-    const imageIcon = new Icon({
-      icon: n.image,
-      expand: true,
-      halign: CENTER,
-      valign: CENTER,
-    });
-    iconImageBox.add(imageIcon);
-    contentBox.add(iconImageBox);
-  }
-
-  const textBox = new Box({ vertical: true });
-
-  const summaryLabel = new Label({
-    label: n.summary,
-    halign: START,
-    xalign: 0,
-    truncate: true,
-  });
-  summaryLabel.className = 'summary';
-  textBox.add(summaryLabel);
+  text.add(
+    new Label({
+      label: n.summary,
+      truncate: true,
+      xalign: 0,
+      halign: Gtk.Align.START,
+      className: 'summary',
+    }),
+  );
 
   if (n.body) {
-    const bodyLabel = new Label({
-      label: n.body,
-      wrap: true,
-      useMarkup: true,
-      halign: START,
-      xalign: 0,
-      justifyFill: true,
-    });
-    bodyLabel.className = 'body';
-    textBox.add(bodyLabel);
+    text.add(
+      new Label({
+        label: Ellipsis(n.body, 120),
+        wrap: true,
+        useMarkup: true,
+        xalign: 0,
+        halign: Gtk.Align.START,
+        className: 'body',
+      }),
+    );
   }
 
-  contentBox.add(textBox);
-  mainBox.add(contentBox);
+  return text;
+}
 
-  // Actions
+function NotifActions(
+  n: Notifd.Notification,
+  onInvoke?: (id: number, action: string) => void,
+): Box | null {
   const actions = n.get_actions();
-  if (actions.length > 0) {
-    const actionsBox = new Box();
-    actionsBox.className = 'actions';
+  if (!actions.length) return null;
 
-    actions.forEach(({ label, id }) => {
-      const actionButton = new Button({ hexpand: true });
-      const actionLabel = new Label({
-        label: label,
-        halign: CENTER,
-        hexpand: true,
-      });
-      actionButton.add(actionLabel);
-      actionButton.connect('clicked', () => {
-        if (onInvoke) {
-          onInvoke(n.id, id);
-        } else {
-          n.invoke(id);
-        }
-      });
-      actionsBox.add(actionButton);
-    });
+  const box = new Box({ spacing: 5 });
+  box.className = 'actions';
 
-    mainBox.add(actionsBox);
+  actions.forEach(({ id, label }) => {
+    const btn = new Button();
+    btn.add(new Label({ label, halign: Gtk.Align.CENTER }));
+    btn.connect('clicked', () => (onInvoke ? onInvoke(n.id, id) : n.invoke(id)));
+    box.add(btn);
+  });
+
+  return box;
+}
+
+function MaterialNotificationLayout(
+  n: Notifd.Notification,
+  onInvoke?: (id: number, action: string) => void,
+  onDismiss?: (id: number) => void,
+): Box {
+  const root = new Box();
+  root.className = 'material-layout';
+
+  // LEFT: image column
+  const image = NotifImage(n);
+  if (image) {
+    image.className += ' material-image';
+    root.add(image);
   }
 
-  eventBox.add(mainBox);
-  return eventBox;
+  // RIGHT: content column
+  const right = new Box({ vertical: true });
+  right.className = 'material-content';
+
+  right.add(NotifHeader(n, onDismiss));
+  right.add(NotifText(n));
+
+  const actions = NotifActions(n, onInvoke);
+  if (actions) right.add(actions);
+
+  root.add(right);
+  return root;
+}
+
+export function Notification({
+  notification: n,
+  onDismiss,
+  onInvoke,
+  onHover,
+  onHoverLost,
+}: NotificationProps): EventBox {
+  const root = new EventBox();
+  root.className = `Notification ${urgencyClass(n)}`;
+
+  if (onHover) root.connect('enter-notify-event', onHover);
+  if (onHoverLost) root.connect('leave-notify-event', onHoverLost);
+
+  const layout = new Box({ vertical: true });
+
+  // Close button can be overlayed or injected per layout later
+  layout.add(MaterialNotificationLayout(n, onInvoke, onDismiss));
+
+  root.add(layout);
+  return root;
 }

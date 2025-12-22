@@ -1,0 +1,17 @@
+.bar-media {
+  margin-top: 1rem;
+  padding-left: 0.1rem;
+}
+
+.bar-media .media-label{
+  font-size: 1rem;
+}
+
+.bar-media .media-label.artist {
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+
+.bar-media .media-label.title {
+  font-weight: bold;
+}
